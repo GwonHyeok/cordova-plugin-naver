@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-naver" name="cordova-plugin-naver" version="1.0.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>Naver</name>
+    <description>Naver Cordova Plugin</description>
+
+    <!-- 네이버 앱 OAuth 정보 -->
+    <preference name="OAUTH_CLIENT_ID"/>
+    <preference name="OAUTH_CLIENT_SECRET"/>
+    <preference name="OAUTH_CLIENT_NAME"/>
+
+    <engines>
+        <!-- Requires Gradle building -->
+        <engine name="cordova-android" version=">3.9.9"/>
+    </engines>
+
+    <!-- Android -->
+    <platform name="android">
+        <js-module src="www/naver-native.js" name="Naver">
+            <clobbers target="Naver"/>
+        </js-module>
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="Naver">
+                <param name="android-package" value="io.ghyeok.cordova.naver.NaverPlugin"/>
+            </feature>
+        </config-file>
+
+        <!-- NaverPlugin OAuth2.0 변수 저장 -->
+        <source-file src="src/android/naver.xml" target-dir="res/values"/>
+        <config-file parent="/*" target="res/values/naver.xml">
+            <string name="naver_client_id">$OAUTH_CLIENT_ID</string>
+            <string name="naver_client_secret">$OAUTH_CLIENT_SECRET</string>
+            <string name="naver_client_name">$OAUTH_CLIENT_NAME</string>
+        </config-file>
+
+        <!-- Android Manifest Config -->
+        <config-file parent="/*" target="AndroidManifest.xml">
+
+            <!-- Network State 퍼미션 -->
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        </config-file>
+
+        <config-file parent="application" target="AndroidManifest.xml">
+
+            <!-- 네이버 아이디로 로그인에서 사용하는 액티비티를 등록 -->
+            <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+                      android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+            <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+                      android:label="Naver OAuth2.0"/>
+        </config-file>
+
+        <!-- cordova plugin src files -->
+        <source-file src="src/android/io/ghyeok/cordova/naver/NaverPlugin.java"
+                     target-dir="src/io/ghyeok/cordova/naver"/>
+
+        <!-- 네이버 라이브러리 JAR -->
+        <source-file src="src/android/libs/3rdparty_login_library_android_4.1.4.jar" target-dir="libs"/>
+    </platform>
+
+</plugin>

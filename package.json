@@ -1,0 +1,23 @@
+{
+  "name": "cordova-plugin-naver",
+  "version": "1.0.0",
+  "description": "Naver Cordova Plugin",
+  "cordova": {
+    "id": "cordova-plugin-naver",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova-android",
+      "version": ">3.9.9"
+    }
+  ],
+  "author": "GHyeok",
+  "license": "ISC"
+}
