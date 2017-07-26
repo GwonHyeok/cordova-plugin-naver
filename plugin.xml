@@ -14,6 +14,7 @@
     <engines>
         <!-- Requires Gradle building -->
         <engine name="cordova-android" version=">3.9.9"/>
+        <engine name="cordova-ios" version=">=3.5.0"/>
     </engines>
 
     <!-- Android -->
@@ -59,6 +60,37 @@
 
         <!-- 네이버 라이브러리 JAR -->
         <source-file src="src/android/libs/3rdparty_login_library_android_4.1.4.jar" target-dir="libs"/>
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <js-module src="www/naver-native.js" name="Naver">
+            <clobbers target="Naver"/>
+        </js-module>
+
+        <config-file parent="/*" target="config.xml">
+            <feature name="Naver">
+                <param name="ios-package" value="NaverPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+          <array>
+            <string>naversearchapp</string>
+            <string>naversearchthirdlogin</string>
+          </array>
+        </config-file>
+
+        <!-- Naver Framework -->
+        <header-file src="src/ios/libs/NaverThirdPartyConstantsForApp.h"/>
+        <header-file src="src/ios/libs/NaverThirdPartyLoginConnection.h"/>
+        <header-file src="src/ios/libs/NLoginThirdPartyOAuth20InAppBrowserViewController.h"/>
+        <source-file src="src/ios/libs/NLoginThirdPartyOAuth20InAppBrowserViewController.m"/>
+        <source-file src="src/ios/libs/libNaverLogin.a" framework="true"/>
+
+        <!-- 소스  -->
+        <header-file src="src/ios/NaverPlugin.h"/>
+        <source-file src="src/ios/NaverPlugin.m"/>
     </platform>
 
 </plugin>

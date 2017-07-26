@@ -5,19 +5,32 @@
   "cordova": {
     "id": "cordova-plugin-naver",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "keywords": [
     "ecosystem:cordova",
     "cordova-android"
   ],
+  "author": "GHyeok",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GwonHyeok/cordova-plugin-naver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GwonHyeok/cordova-plugin-naver/issues"
+  },
+  "homepage": "https://github.com/GwonHyeok/cordova-plugin-naver#readme",
   "engines": [
     {
       "name": "cordova-android",
       "version": ">3.9.9"
+    },
+    {
+      "name": "cordova-ios",
+      "version": ">=3.5.0"
     }
-  ],
-  "author": "GHyeok",
-  "license": "ISC"
+  ]
 }
