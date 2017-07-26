@@ -74,11 +74,44 @@
             </feature>
         </config-file>
 
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>kServiceAppUrlScheme</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSExceptionDomains</key>
+                <dict>
+                    <key>naver.net</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key>
+                        <true/>
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                        <false/>
+                    </dict>
+                    <key>naver.com</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key>
+                        <true/>
+                        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                        <false/>
+                    </dict>
+                </dict>
+            </dict>
+        </config-file>
+
         <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
-          <array>
-            <string>naversearchapp</string>
-            <string>naversearchthirdlogin</string>
-          </array>
+            <array>
+                <string>naversearchapp</string>
+                <string>naversearchthirdlogin</string>
+            </array>
         </config-file>
 
         <!-- Naver Framework -->
@@ -87,6 +120,7 @@
         <header-file src="src/ios/libs/NLoginThirdPartyOAuth20InAppBrowserViewController.h"/>
         <source-file src="src/ios/libs/NLoginThirdPartyOAuth20InAppBrowserViewController.m"/>
         <source-file src="src/ios/libs/libNaverLogin.a" framework="true"/>
+        <resource-file src="src/ios/libs/NaverAuth.bundle"/>
 
         <!-- 소스  -->
         <header-file src="src/ios/NaverPlugin.h"/>
