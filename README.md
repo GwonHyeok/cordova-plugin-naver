@@ -16,6 +16,41 @@ $ cordova plugin add cordova-plugin-naver --save --variable OAUTH_CLIENT_ID="OAU
 
 만약  OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME 등의 값이 해당 플러그인 추가 후 변경된다면 플러그인 삭제후 다시 추가하는 것을 추천 드립니다.
 
+## 안드로이드
+안드로이드 플랫폼을 지원하실 경우에 네이버 개발자 센터에서 앱을 등록한 후 
+
+로그인 API 환경에 안드로이드를 추가하고 안드로이드 
+
+**앱 페키지 이름을 아이오닉 프로젝트 페키지 이름과 일치**시켜주면 됩니다.
+
+## 아이폰
+
+### 개발제 센터 설정
+
+아이폰 플랫폼을 지원하실 경우에 네이버 개발자 센터에서 앱을 등록한 후 로그인 API 환경에 iOS를 추가합니다
+
+아이폰의 경우에는 안드로이드와 다르게 URL Scheme을 추가 해주셔야 합니다.
+
+URL Scheme 형식은 자동으로 naver-cordova-plugin 에서 만들게 되며 형식은 다음과 같습니다.
+
+```text
+naver$OAUTH_CLIENT_ID
+``` 
+
+가장 앞에 **naver**가 있고 바로 뒤에는 **OAUTH_CLIENT_ID**가 붙게 됩니다.
+
+예를 들면 OAUTH_CLIENT_ID가 AB_CDEFGHI이라면 Scheme은 **naverAB_CDEFGHI**가 됩니다.
+
+즉 개발자 센터에서 URL Scheme 항목에 **naverAB_CDEFGHI**을 추가해주시면 됩니다.
+
+### XCode 프로젝트 설정
+불행하게도 아이폰앱은 AppDelegate에 코드를 추가 해주셔야 합니다.
+
+우선 헤더에 해당 항목을 추가해야합니다.
+```objective-c
+#import "NaverThirdPartyLoginConnection.h"
+```
+
 ## API
 
 ### 로그인
