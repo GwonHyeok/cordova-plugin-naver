@@ -111,7 +111,6 @@
  * API 호출 결과로 네이버 아이디값은 제공하지 않으며, 대신 'id'라는 애플리케이션당 유니크한 일련번호값을 이용해서 자체적으로 회원정보를 구성하셔야 합니다.
  * 기존 REST API처럼 요청 URL과 요청 변수로 호출하는 방법은 동일하나, OAuth 2.0 인증 기반이므로 추가적으로 네이버 로그인 API를 통해 접근 토큰(access token)을 발급받아,
  * HTTP로 호출할 때 Header에 접근 토큰 값을 전송해 주시면 활용 가능합니다.
- *
  * @param command
  */
 - (void)requestMe:(CDVInvokedUrlCommand *)command {
@@ -126,7 +125,10 @@
 
     [[[NSURLSession sharedSession] dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSError *serializationError;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:nil error:&serializationError];
+        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&serializationError];
+
+        // camelCase 형태로 변경
+        [self buildRequestMeJsonObject:json];
 
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:json];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -140,6 +142,24 @@
     inAppBrowserViewController.parentOrientation = (UIInterfaceOrientation) [[UIDevice currentDevice] orientation];
     [[self viewController] presentViewController:inAppBrowserViewController animated:NO completion:nil];
 }
+
+- (void)exchangeKey:(NSString *)aKey withKey:(NSString *)aNewKey inMutableDictionary:(NSMutableDictionary *)aDict {
+    if (![aKey isEqualToString:aNewKey]) {
+        id objectToPreserve = aDict[aKey];
+        aDict[aNewKey] = objectToPreserve;
+        [aDict removeObjectForKey:aKey];
+    }
+}
+
+- (void)buildRequestMeJsonObject:(NSMutableDictionary *)dictionary {
+    NSMutableDictionary *responseDict = dictionary[@"response"];
+    [self exchangeKey:@"enc_id" withKey:@"encryptionId" inMutableDictionary:responseDict];
+    [self exchangeKey:@"profile_image" withKey:@"profileImage" inMutableDictionary:responseDict];
+
+    dictionary[@"response"] = responseDict;
+    [self exchangeKey:@"resultcode" withKey:@"resultCode" inMutableDictionary:dictionary];
+}
+
 
 #pragma mark - NaverThirdPartyLoginConnectionDelegate
 
@@ -181,6 +201,5 @@
 
     self.loginCallbackId = nil;
 }
-
 
 @end
