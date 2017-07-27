@@ -74,12 +74,29 @@
             </feature>
         </config-file>
 
+        <!-- 네이버 OAuth 설정 -->
+        <config-file target="*-Info.plist" parent="NaverClientID">
+            <string>$OAUTH_CLIENT_ID</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NaverClientSecret">
+            <string>$OAUTH_CLIENT_SECRET</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NaverClientName">
+            <string>$OAUTH_CLIENT_NAME</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NaverAppScheme">
+            <string>naverplugin</string>
+        </config-file>
+
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>kServiceAppUrlScheme</string>
+                        <string>naverplugin</string>
                     </array>
                 </dict>
             </array>

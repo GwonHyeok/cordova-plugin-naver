@@ -21,10 +21,15 @@
     [[NaverThirdPartyLoginConnection getSharedInstance] setOnlyPortraitSupportInIphone:YES];
 
     // 네이버 플러그인 데이터 설정
-    [[NaverThirdPartyLoginConnection getSharedInstance] setServiceUrlScheme:@"kServiceAppUrlScheme"];
-    [[NaverThirdPartyLoginConnection getSharedInstance] setConsumerKey:@"U3_LDixvaYKB83GacpFb"];
-    [[NaverThirdPartyLoginConnection getSharedInstance] setConsumerSecret:@"kxPBNNUVu_"];
-    [[NaverThirdPartyLoginConnection getSharedInstance] setAppName:@"cordova plugin naver test"];
+    NSString *serviceUrlScheme = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NaverAppScheme"];
+    NSString *consumerKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NaverClientID"];
+    NSString *consumerSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NaverClientSecret"];
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NaverClientName"];
+
+    [[NaverThirdPartyLoginConnection getSharedInstance] setServiceUrlScheme:serviceUrlScheme];
+    [[NaverThirdPartyLoginConnection getSharedInstance] setConsumerKey:consumerKey];
+    [[NaverThirdPartyLoginConnection getSharedInstance] setConsumerSecret:consumerSecret];
+    [[NaverThirdPartyLoginConnection getSharedInstance] setAppName:appName];
 
 }
 
