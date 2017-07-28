@@ -88,7 +88,7 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="NaverAppScheme">
-            <string>naverplugin</string>
+            <string>naver$OAUTH_CLIENT_ID</string>
         </config-file>
 
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
