@@ -106,27 +106,9 @@
  * @param command
  */
 - (void)requestApi:(CDVInvokedUrlCommand *)command {
-    if ([command.arguments count] == 0) {
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"API 주소는 필수 입니다"];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        return;
-    }
-
-    NSString *accessToken = [[NaverThirdPartyLoginConnection getSharedInstance] accessToken];
-
-    NSString *urlString = [command.arguments objectAtIndex:0];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *authValue = [NSString stringWithFormat:@"Bearer %@", accessToken];
-    NSString *contentType = @"text/json;charset=utf-8";
-    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:contentType forHTTPHeaderField:@"Content-Type"];
-
-    [[[NSURLSession sharedSession] dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSString *responseBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:responseBody];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }] resume];
+    // TODO 구현 필요, 안드로이드 라이브러리에는 있으나 아이폰 라이브러리에는 존재하지 않는 메소드
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"구현되지 않았습니다"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 /**
@@ -194,7 +176,18 @@
 - (void)oauth20ConnectionDidFinishRequestACTokenWithAuthCode {
     NSLog(@"oauth20ConnectionDidFinishRequestACTokenWithAuthCode");
     NSString *accessToken = [[NaverThirdPartyLoginConnection getSharedInstance] accessToken];
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:accessToken];
+    NSString *refreshToken = [[NaverThirdPartyLoginConnection getSharedInstance] refreshToken];
+    NSDate *expiresAt = [[NaverThirdPartyLoginConnection getSharedInstance] accessTokenExpireDate];
+    NSString *tokenType = [[NaverThirdPartyLoginConnection getSharedInstance] tokenType];
+
+    NSDictionary *result = @{
+                             @"accessToken" : accessToken,
+                             @"refreshToken" : refreshToken,
+                             @"expiresAt" : [NSString stringWithFormat:@"%f", [expiresAt timeIntervalSince1970]],
+                             @"tokenType" : tokenType
+                             };
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary: result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.loginCallbackId];
 
     self.loginCallbackId = nil;
@@ -203,7 +196,18 @@
 - (void)oauth20ConnectionDidFinishRequestACTokenWithRefreshToken {
     NSLog(@"oauth20ConnectionDidFinishRequestACTokenWithRefreshToken");
     NSString *accessToken = [[NaverThirdPartyLoginConnection getSharedInstance] accessToken];
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:accessToken];
+    NSString *refreshToken = [[NaverThirdPartyLoginConnection getSharedInstance] refreshToken];
+    NSDate *expiresAt = [[NaverThirdPartyLoginConnection getSharedInstance] accessTokenExpireDate];
+    NSString *tokenType = [[NaverThirdPartyLoginConnection getSharedInstance] tokenType];
+
+    NSDictionary *result = @{
+                             @"accessToken" : accessToken,
+                             @"refreshToken" : refreshToken,
+                             @"expiresAt" : [NSString stringWithFormat:@"%f", [expiresAt timeIntervalSince1970]],
+                             @"tokenType" : tokenType
+                             };
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary: result];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.loginCallbackId];
 
     self.loginCallbackId = nil;
