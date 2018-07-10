@@ -233,14 +233,14 @@ public class NaverPlugin extends CordovaPlugin {
         JSONObject serializedResponseObject = new JSONObject();
 
         // 결과 파싱후 camel case 로 수정
-        serializedResponseObject.put("email", responseJsonObject.get("email"));
-        serializedResponseObject.put("nickname", responseJsonObject.get("nickname"));
-        serializedResponseObject.put("profileImage", responseJsonObject.get("profile_image"));
-        serializedResponseObject.put("age", responseJsonObject.get("age"));
-        serializedResponseObject.put("gender", responseJsonObject.get("gender"));
-        serializedResponseObject.put("id", responseJsonObject.get("id"));
-        serializedResponseObject.put("name", responseJsonObject.get("name"));
-        serializedResponseObject.put("birthday", responseJsonObject.get("birthday"));
+        serializedResponseObject.put("email", responseJsonObject.opt("email"));
+        serializedResponseObject.put("nickname", responseJsonObject.opt("nickname"));
+        serializedResponseObject.put("profileImage", responseJsonObject.opt("profile_image"));
+        serializedResponseObject.put("age", responseJsonObject.opt("age"));
+        serializedResponseObject.put("gender", responseJsonObject.opt("gender"));
+        serializedResponseObject.put("id", responseJsonObject.opt("id"));
+        serializedResponseObject.put("name", responseJsonObject.opt("name"));
+        serializedResponseObject.put("birthday", responseJsonObject.opt("birthday"));
 
         // 결과 코드, 메세지
         serializedObject.put("resultCode", jsonObject.get("resultcode"));
