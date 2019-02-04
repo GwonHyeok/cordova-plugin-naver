@@ -31,7 +31,15 @@
 
         <!-- NaverPlugin OAuth2.0 변수 저장 -->
         <source-file src="src/android/naver.xml" target-dir="res/values"/>
+        <!-- Used for cordova-android 6 -->
         <config-file parent="/*" target="res/values/naver.xml">
+            <string name="naver_client_id">$OAUTH_CLIENT_ID</string>
+            <string name="naver_client_secret">$OAUTH_CLIENT_SECRET</string>
+            <string name="naver_client_name">$OAUTH_CLIENT_NAME</string>
+        </config-file>
+
+        <!-- Used for cordova-android 7 -->
+        <config-file target="app/src/main/res/values/naver.xml" parent="/*">
             <string name="naver_client_id">$OAUTH_CLIENT_ID</string>
             <string name="naver_client_secret">$OAUTH_CLIENT_SECRET</string>
             <string name="naver_client_name">$OAUTH_CLIENT_NAME</string>
